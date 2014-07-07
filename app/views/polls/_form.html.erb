@@ -1,0 +1,36 @@
+<%= form_for @question do |f| %>
+    <% @question.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+    <% end %>
+
+    <p>
+      <%= f.label :content, "Question" %><br />
+      <%= f.text_area :content, :rows => 3 %><br />
+      <%= f.hidden_field :id %><br />
+    </p>
+    <div id="answers">
+        <%= f.fields_for :answers do |builder| %>
+            <%= render 'answer_fields', :f => builder %>
+        <% end %>
+
+      <div>
+         <a id="add-new-answer" href="javascript: void(0)">Add new answer field</a>
+      </div>
+    </div>
+
+
+  <p><%= f.submit "Submit" %></p>
+<% end %>
+
+
+
+
+<script id="answer-tmpl" type="text/template">
+
+  <p class="answer-item">
+    <label for="question_answers_attributes_**id**_content">Answer</label>
+    <input id="question_answers_attributes_**id**_content" name="question[answers_attributes][**id**][content]" value="" type="text">
+    <input name="question[answers_attributes][**id**][_destroy]" value="0" type="hidden">
+  </p>
+
+</script>

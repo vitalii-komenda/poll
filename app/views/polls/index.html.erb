@@ -1,0 +1,17 @@
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  <% for question in @questions %>
+    <tr>
+      <td><%= question.content %></td>
+      <td><%= link_to "Show", poll_path(question) %></td>
+      <% if can_manage question %>
+      <td><%= link_to "Edit", edit_poll_path(question) %></td>
+      <td><%= link_to "Destroy",  poll_path(question), :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Poll", new_poll_path %></p>

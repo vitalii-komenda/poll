@@ -1,0 +1,21 @@
+<%=h @question.content %>
+<h3>
+  Answers
+</h3>
+<ul>
+<% for answer in @question.answers %>
+  <li>
+    <%=h answer.content %>
+    <%= link_to "Vote", vote_poll_path(answer),  :method => :post %>
+    Votes: <%=h answer.votes.count %>
+  </li>
+<% end %>
+</ul>
+
+<p>
+  <% if can_manage @question %>
+    <%= link_to "Edit", edit_poll_path(@question) %> |
+    <%= link_to "Destroy", poll_path(@question), :confirm => 'Are you sure?', :method => :delete %> |
+  <% end %>
+  <%= link_to "View All", polls_path %>
+</p>
