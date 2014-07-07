@@ -4,8 +4,7 @@ class Question < ActiveRecord::Base
 
   accepts_nested_attributes_for :answers, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
 
-
-  # validates_length_of :answers, :minimum => 2, :message => "Votes should be more then or equal 2"
+  validates :content, :length => {:minimum => 5}
   validate :answers_length_enough
 
 
@@ -13,8 +12,7 @@ class Question < ActiveRecord::Base
     if self.answers.length < 2
       errors.add :answers, 'should be more than or equal 2'
     end
-    if self.answers.length == 2 and
-        self.answers.any? { |q| q._destroy == true }
+    if self.answers.select { |q| q._destroy == false }.length < 2
       errors.add :answers, 'cannot be less then 2'
     end
   end
