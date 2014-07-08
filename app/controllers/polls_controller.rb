@@ -31,6 +31,7 @@ class PollsController < ApplicationController
 
   def update
     @question = Question.find(params[:id])
+    check_access @question
     if @question.update_attributes(poll_params)
       flash[:notice] = "Successfully updated"
       redirect_to polls_path
@@ -41,6 +42,7 @@ class PollsController < ApplicationController
 
   def destroy
     @question = Question.find(params[:id])
+    check_access @question
     @question.destroy
     flash[:notice] = "Successfully destroyed"
     redirect_to polls_url
@@ -59,6 +61,10 @@ class PollsController < ApplicationController
   end
 
   private
+
+  def check_access question
+    throw "Permission error"  unless can_manage question
+  end
 
   def poll_params
     params.require(:question).permit(:content, :answers_attributes => [:content, :_destroy, :id])

@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20140707172950) do
 
   create_table "users", force: true do |t|
     t.string   "ip"
+    t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
