@@ -89,4 +89,15 @@ class PollsControllerTest < ActionController::TestCase
     question = Question.find_by(id: @question.id)
     assert_not_nil "Updated a", question.answers[1]
   end
+
+  test "should not allow user to vote multiple times" do
+    post(:vote, id: @question.answers[0].id)
+    post(:vote, id: @question.answers[0].id)
+    votes = Vote.where(
+        answer_id: @question.answers[0].id,
+        user_id: @user.id
+    ).select('count(*) as total')
+    assert_equal 1, votes.first.total
+  end
+
 end
