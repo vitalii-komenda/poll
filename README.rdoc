@@ -1,4 +1,6 @@
 == README
 
-Its little very simple poll web app.
-
+It has the following features:
+Question creating.
+Answers creating and relating to a question.
+Voting with protection from duplicating.
